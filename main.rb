@@ -55,3 +55,23 @@ def compare_codes(secret_code, player_guess)
   return feedback, exact_matches, partial_matches
   
 end
+
+def play_game
+  max_turns = 12
+  secret_code = generate_secret_code
+  # secret_code = %w[blue orange purple yellow]
+  puts "Welcome to Mastermind!"
+  puts "You have #{max_turns} turns to guess the secret code."
+
+  max_turns.times do |turn|
+    puts "\nTurn #{turn + 1}"
+    player_guess = get_player_input
+    feedback, exact_positions, partial_positions = compare_codes(secret_code,        player_guess)
+    puts "Feedback: #{feedback.join(' ')}"
+    if exact_positions.length == secret_code.length
+      puts "Congratulations! You won!\n"
+      return
+    end
+  end
+  puts "Sorry, you didn't guess correctly the code. It was: #{secret_code.join(', ')}"
+end  
