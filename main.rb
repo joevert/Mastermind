@@ -21,3 +21,37 @@ def get_player_input
     end
   end
 end
+
+def compare_codes(secret_code, player_guess)
+  exact_matches = []
+  partial_matches = []
+  feedback = []
+
+  secret_code_copy = secret_code.dup
+  player_guess_copy = player_guess.dup
+
+  secret_code.each_with_index do |color, index|
+    if color == player_guess[index]
+      exact_matches << index
+      feedback[index] << "\e[42m  \e[0m"
+      secret_code_copy[index] = nil
+      player_guess_copy[index] = nil
+    else
+      feedback[index] = nil
+    end
+  end
+
+  player_guess_copy.each_with_index do |color, index|
+    next if color.nil?
+    
+    if secret_code_copy.include?(color)
+      feedback[index] = "\e[43m  \e[0m"
+      secret_code_copy[secret_code_copy.index(color)] = nil
+    end
+  end
+
+  feedback.map!{|f| f || "\e[47m \e[0m"}
+
+  return feedback, exact_matches, partial_matches
+  
+end
