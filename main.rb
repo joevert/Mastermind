@@ -4,7 +4,6 @@ COLORS = ['red', 'blue', 'green', 'yellow', 'orange', 'purple']
 
 def generate_secret_code
   secret_code = Array.new(4) {COLORS.sample}
-  puts secret_code
 end
 
 def get_player_input
@@ -33,7 +32,7 @@ def compare_codes(secret_code, player_guess)
   secret_code.each_with_index do |color, index|
     if color == player_guess[index]
       exact_matches << index
-      feedback[index] << "\e[42m  \e[0m"
+      feedback[index] = "\e[42m  \e[0m"
       secret_code_copy[index] = nil
       player_guess_copy[index] = nil
     else
@@ -75,3 +74,5 @@ def play_game
   end
   puts "Sorry, you didn't guess correctly the code. It was: #{secret_code.join(', ')}"
 end  
+
+play_game
