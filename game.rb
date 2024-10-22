@@ -41,7 +41,7 @@ class Game
     feedback = nil
     @max_turns.times do |turn|
       puts "\nTurn #{turn + 1}"
-      guess = participant.guess(feedbackgame)
+      guess = participant.guess(feedback)
       feedback = Code.compare(secret_code, guess)
       Feedback.new(feedback).display
 
